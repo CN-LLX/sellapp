@@ -59,7 +59,6 @@
         created(){
             getmian().then((res)=>{
                 this.shuju=res.data.data
-                console.log(this.shuju)
             })
         },
         methods:{

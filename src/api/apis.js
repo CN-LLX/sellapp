@@ -11,3 +11,6 @@ export function getmian(){
 export function getgoods(){
     return req.get('/api/goods')
 }
+export function getevaluate(){
+    return req.get('/api/ratings')
+}
