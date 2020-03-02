@@ -29,7 +29,20 @@
                         <p class="p1">{{a.name}}</p>
                         <p class="p2" v-show="a.description">{{a.description}}</p>
                         <p class="p2">月售{{a.sellCount}}份</p>
-                        <p><span class="red">￥{{a.price}}</span><span class="hua"><span v-show="a.oldPrice">￥</span>{{a.oldPrice}}</span></p>
+                        <div class="dp">
+                            <p>
+                                <span class="red">￥{{a.price}}</span>
+                                <span class="hua">
+                                    <span v-show="a.oldPrice">￥</span>
+                                    {{a.oldPrice}}
+                                </span>
+                            </p>
+                            <div class="butt">
+                                <div class="but-right" @click="numadd(a.name)">+</div>
+                                <p class="but-con" v-show="a.num!==0">{{a.num}}</p>
+                                <div class="but-left" v-show="a.num!==0" @click="numreduce(a.name)">-</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -47,34 +60,64 @@
     import {getgoods} from '../api/apis'
     import BScroll from 'better-scroll'
 
-
     export default {
         data(){
             return{
-                shuju:[],
                 cursel:0
             }
         },
         created(){
             getgoods().then((res)=>{
-                this.shuju=res.data.data
-                // console.log(this.shuju)
+                this.$store.commit('getshuju',res.data.data)
+                
+                // this.shuju=res.data.data
+                
             })
         },
         mounted(){
             //(DOM节点，滚动配置)
-            // var leftdiv=
             new BScroll(document.querySelector('.left'),{
                 click:true
             })
-
-            this.rightDiv=new BScroll(document.querySelector('.right'));
+            this.rightDiv=new BScroll(document.querySelector('.right'),{
+                click:true,
+                probeType:3
+            });
+            this.rightDiv.on('scroll',(obj)=>{
+                var _y=Math.abs(obj.y)
+                for(let v of this.gethight){
+                    if(_y>=v.min && _y<v.max){
+                        this.cursel=v.index
+                    }
+                }
+            })
+        },
+        computed:{
+            gethight(){
+                var arr=[];
+                var num=0;
+                for(var v in this.shuju){
+                    var h=document.getElementById(v).offsetHeight;
+                    arr.push({min:num ,max: num+h,index:v})
+                    num+=h
+                }
+                return arr
+            },
+            shuju(){
+                return this.$store.state.datalist
+            }
         },
         methods: {
             clickleft(val){
                 this.cursel=val
                 this.rightDiv.scrollToElement(document.getElementById(val),600)
-                // console.log(val)
+            },
+            numreduce(val){
+                this.$store.commit('setnumreduce',val)
+            },
+            numadd(val){
+                this.$store.commit('setnumadd',val)
+                console.log(this.$store.getters.shopcar)
             }
         },
     }
@@ -129,6 +172,7 @@
             width: 100%;
             height: 110px;
             padding: 20px;
+            padding-right: 15px;
             background-color: white;
             display: flex;
             border-bottom: 1px solid #D9DDE1;
@@ -156,17 +200,62 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
-                .red{
-                    color: red;
-                    font-weight: bolder;
-                    font-size: 16px;
-                    margin-right: 10px;
+                .dp{
+                    display: flex;
+                    justify-content: space-between;
+                    .red{
+                        color: red;
+                        font-weight: bolder;
+                        font-size: 16px;
+                        margin-right: 10px;
+                    }
+                    .hua{
+                        text-decoration: line-through;
+                    }
+                    .butt{
+                        width: 75px;
+                        // display: flex;
+                        // justify-content: space-between;
+                        .but-con{
+                            width: 20px;
+                            text-align: center;
+                            line-height: 24px;
+                            font-size: 12px;
+                            float: right;
+                        }
+                        .but-left{
+                            width: 24px;
+                            height: 24px;
+                            border-radius: 50%;
+                            background-color: #00A1DC;
+                            text-align: center;
+                            line-height: 24px;
+                            color: white;
+                            font-size: 20px;
+                            float: right;
+                        }
+                        .but-right{
+                            width: 24px;
+                            height: 24px;
+                            border-radius: 50%;
+                            background-color: #00A1DC;
+                            text-align: center;
+                            line-height: 24px;
+                            color: white;
+                            font-size: 20px;
+                            float: right;
+                        }
+                    }
                 }
-                .hua{
-                    text-decoration: line-through;
-                }
+
             }
         }
     }
+}
+</style>
+<style>
+.ivu-btn-circle.ivu-btn-icon-only{
+    width: 24px;
+    height: 24px;
 }
 </style>

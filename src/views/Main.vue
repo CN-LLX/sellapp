@@ -35,14 +35,21 @@
             </div>
         </div>
         <router-view/>
-        <div class="shopcar">
+        <shopcar v-show="show"></shopcar>
+        <div class="shopcar" @click="show=!show">
             <div class="shopcar-left">
+                <div class="shuliang">{{gouwuchenum}}</div>
                 <img src="../assets/imgs/shopcar.png" alt="">
-                <span class="zong">￥0</span>
+                <span class="zong">￥{{gouwuchem}}</span>
                 <span class="pei">另需配送费￥{{this.shuju.deliveryPrice}}元</span>
             </div>
-            <div class="shopcar-right">
-                ￥{{this.shuju.minPrice}}起送
+            <div :class="{shopcarRight:true,colorP:gouwuchem>=20}" >
+                <span v-show="gouwuchem<20">
+                    ￥{{this.shuju.minPrice}}起送
+                </span>
+                <span v-show="gouwuchem>=20">
+                    去结算
+                </span>
             </div>
         </div>
     </div>
@@ -50,16 +57,40 @@
 
 <script>
     import {getmian} from '../api/apis'
+    import shopcar from './Shopcar'
+
     export default {
         data(){
             return {
-                shuju:{}
+                shuju:{},
+                show:false,
             }
         },
+        components:{
+            shopcar
+        },
+
         created(){
             getmian().then((res)=>{
                 this.shuju=res.data.data
             })
+        },
+        computed:{
+            gouwuchenum(){
+                var zong=0;
+                this.$store.getters.shopcar.map(v=>{
+                    zong+=v.num
+                })
+                return zong
+            },
+            gouwuchem(){
+                var qian=0;
+                this.$store.getters.shopcar.map(v=>{
+                    qian+=v.price*v.num
+                })
+                return qian
+            }
+
         },
         methods:{
 
@@ -192,6 +223,18 @@ img{
         width: 250px;
         height: 100%;
         // background-color: red;
+        .shuliang{
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            border-radius: 50%;
+            background-color: red;
+            position: absolute;
+            top: -10px;
+            left: 40px;
+            z-index: 100;
+        }
         img{
             position: absolute;
             top: -16px;
@@ -212,7 +255,7 @@ img{
             color:#909397;
         }
     }
-    .shopcar-right{
+    .shopcarRight{
         width: 110px;
         height: 100%;
         background-color: #2A353A;
@@ -221,6 +264,10 @@ img{
         line-height: 60px;
         text-align: center;
         font-weight: bolder;
+    }
+    .colorP{
+        background-color: rgb(255, 59, 59);
+        color: white;
     }
 }
 </style>

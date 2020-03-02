@@ -4,7 +4,6 @@
       <div class="top-left">
         <p class="top-left-p1">{{shuju.score}}</p>
         <p class="top-left-p2">综合评分</p>
-        <p class="top-left-p3">高于周五商家</p>
       </div>
       <div class="top-right">
         <div class="top-right-fen">
