@@ -6,12 +6,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state:{
         datalist:[],
-        gouwuche:[]
+        gouwuche:[],
+        show:false,
     },
     mutations:{
         getshuju(state,shuju){
             state.datalist=shuju
-            console.log(state.datalist)
         },
         setnumadd(state,name){
             for(let i in state.datalist){
@@ -39,6 +39,10 @@ export default new Vuex.Store({
                     i.num=0
                 })
             })
+            state.show=false;
+        },
+        show(state){
+            state.show=!state.show
         }
     },
     getters:{
@@ -66,7 +70,6 @@ export default new Vuex.Store({
     }
 })
 
-// store.commit('changeName','猪二娃')
 
 
 

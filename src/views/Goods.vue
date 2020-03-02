@@ -69,9 +69,6 @@
         created(){
             getgoods().then((res)=>{
                 this.$store.commit('getshuju',res.data.data)
-                
-                // this.shuju=res.data.data
-                
             })
         },
         mounted(){
@@ -117,7 +114,6 @@
             },
             numadd(val){
                 this.$store.commit('setnumadd',val)
-                console.log(this.$store.getters.shopcar)
             }
         },
     }
@@ -155,7 +151,6 @@
     .right{
         flex: 1;
         height: 100%;
-        // background-color: palevioletred;
         overflow: scroll;
         .right-lei{
             width: 100%;
@@ -214,8 +209,6 @@
                     }
                     .butt{
                         width: 75px;
-                        // display: flex;
-                        // justify-content: space-between;
                         .but-con{
                             width: 20px;
                             text-align: center;

@@ -36,7 +36,7 @@
         </div>
         <router-view/>
         <shopcar v-show="show"></shopcar>
-        <div class="shopcar" @click="show=!show">
+        <div class="shopcar" @click="clickshow">
             <div class="shopcar-left">
                 <div class="shuliang">{{gouwuchenum}}</div>
                 <img src="../assets/imgs/shopcar.png" alt="">
@@ -63,13 +63,11 @@
         data(){
             return {
                 shuju:{},
-                show:false,
             }
         },
         components:{
             shopcar
         },
-
         created(){
             getmian().then((res)=>{
                 this.shuju=res.data.data
@@ -89,11 +87,16 @@
                     qian+=v.price*v.num
                 })
                 return qian
+            },
+            show(){
+                return this.$store.state.show
             }
 
         },
         methods:{
-
+            clickshow(){
+                this.$store.commit('show')
+            }
         }
         
     }

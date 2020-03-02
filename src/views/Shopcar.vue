@@ -87,7 +87,6 @@
     .con{
         width: 100%;
         max-height: 70%;
-        // height: 70%;
         background-color: rgb(255, 255, 255);
         position: absolute;
         bottom: 60px;

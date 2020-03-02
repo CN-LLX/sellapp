@@ -94,7 +94,6 @@
 <script>
 import { getmian } from "../api/apis";
 import { getevaluate } from "../api/apis";
-// import BScroll from 'better-scroll'
 
 export default {
   data() {
@@ -108,16 +107,11 @@ export default {
   created() {
     getmian().then(res => {
       this.shuju = res.data.data;
-      console.log(this.shuju);
     });
     getevaluate().then(res => {
       this.zongping = res.data.data;
-      console.log(this.zongping);
     });
   }
-  //   mounted(){
-  //       new BScroll(document.querySelector('.bot'))
-  //   }
 };
 </script>
 
@@ -128,7 +122,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // margin-bottom: 18px;
   .top-left {
     width: 138px;
     height: 80%;
@@ -256,7 +249,6 @@ export default {
     .con-right {
       flex: 1;
       overflow: hidden;
-      // background-color: #00A1DC;
       .con-right-top {
         display: flex;
         justify-content: space-between;

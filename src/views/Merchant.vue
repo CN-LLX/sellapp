@@ -87,7 +87,6 @@
         created(){
             getmian().then((res)=>{
                 this.shuju=res.data.data;
-                console.log(this.shuju)
             })
         }
     }
@@ -97,7 +96,6 @@
 .big{
     display: flex;
     flex-direction: column;
-    // overflow: scroll;
     margin-bottom: 60px;
     .top{
         width: 100%;
@@ -148,7 +146,6 @@
             .bot-con{
                 flex: 1;
                 text-align: center;
-                // padding-top: 14px;
                 margin-top: 14px;
                 .con-big{
                     font-size: 20px;
@@ -240,7 +237,6 @@
         padding-bottom: 0;
         display: flex;
         flex-direction: column;
-        // border-bottom: 1px solid #e4e7e7;   
         .x-top{
             font-weight: bolder;
             color: black;
