@@ -43,7 +43,7 @@
                 <span class="zong">￥{{gouwuchem}}</span>
                 <span class="pei">另需配送费￥{{this.shuju.deliveryPrice}}元</span>
             </div>
-            <div :class="{shopcarRight:true,colorP:gouwuchem>=20}" >
+            <div :class="{shopcarRight:true,colorP:gouwuchem>=this.shuju.minPrice}" >
                 <span v-show="gouwuchem<20">
                     ￥{{this.shuju.minPrice}}起送
                 </span>

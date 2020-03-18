@@ -38,9 +38,9 @@
                                 </span>
                             </p>
                             <div class="butt">
-                                <div class="but-right" @click="numadd(a.name)">+</div>
+                                <div class="but-right" @click="numchen(a.name,1)">+</div>
                                 <p class="but-con" v-show="a.num!==0">{{a.num}}</p>
-                                <div class="but-left" v-show="a.num!==0" @click="numreduce(a.name)">-</div>
+                                <div class="but-left" v-show="a.num!==0" @click="numchen(a.name,-1)">-</div>
                             </div>
                         </div>
                     </div>
@@ -48,11 +48,6 @@
             </div>
             </ul>
         </div>
-
-
-
-
-
     </div>
 </template>
 
@@ -109,11 +104,11 @@
                 this.cursel=val
                 this.rightDiv.scrollToElement(document.getElementById(val),600)
             },
-            numreduce(val){
-                this.$store.commit('setnumreduce',val)
-            },
-            numadd(val){
-                this.$store.commit('setnumadd',val)
+            numchen(name,val){
+                this.$store.commit('setnumchen',{
+                    name,
+                    val
+                })
             }
         },
     }

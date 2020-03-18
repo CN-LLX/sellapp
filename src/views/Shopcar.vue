@@ -26,9 +26,9 @@
                 </div>
                 <div class="con-right">
                     <div class="butt">
-                        <div class="but-right" @click="numadd(v.name)">+</div>
+                        <div class="but-right" @click="numchen(v.name,1)">+</div>
                         <p class="but-con">{{v.num}}</p>
-                        <div class="but-left" @click="numjian(v.name)">-</div>
+                        <div class="but-left" @click="numchen(v.name,-1)">-</div>
                     </div>
                 </div>
             </div>
@@ -43,11 +43,9 @@
             return{
             }
         },
-        created(){            
-        },
         computed:{
             shuju(){
-                return this.$store.state.gouwuche
+                return this.$store.getters.shopcar
             },
             shujunum(){
                 var zong=0;
@@ -58,11 +56,11 @@
             }
         },
         methods:{
-            numadd(val){
-                this.$store.commit('setnumadd',val)
-            },
-            numjian(val){
-                this.$store.commit('setnumreduce',val)
+            numchen(name,val){
+                this.$store.commit('setnumchen',{
+                    name,
+                    val
+                })
             },
             qingkong(){
                 this.$store.commit('qingkong') 

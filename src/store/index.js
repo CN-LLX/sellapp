@@ -6,29 +6,17 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state:{
         datalist:[],
-        gouwuche:[],
         show:false,
     },
     mutations:{
         getshuju(state,shuju){
             state.datalist=shuju
         },
-        setnumadd(state,name){
+        setnumchen(state,obj){
             for(let i in state.datalist){
                 for(let v in state.datalist[i].foods){
-                    if(state.datalist[i].foods[v].name==name){
-                        state.datalist[i].foods[v].num++
-                    }
-                }
-            }
-        },
-        setnumreduce(state,name){
-            for(let i in state.datalist){
-                for(let v in state.datalist[i].foods){
-                    // console.log(state.datalist[i].foods[v])
-                    if(state.datalist[i].foods[v].name==name){
-                        if(state.datalist[i].foods[v].num>0)
-                        state.datalist[i].foods[v].num--
+                    if(state.datalist[i].foods[v].name==obj.name){
+                        state.datalist[i].foods[v].num+=obj.val
                     }
                 }
             }
@@ -64,8 +52,7 @@ export default new Vuex.Store({
             var newarr =arr.filter(item =>
                 obj[item.name] ? '' : (obj[item.name] = true),
             );
-            state.gouwuche=newarr
-            return state.gouwuche;
+            return newarr
         }
     }
 })
